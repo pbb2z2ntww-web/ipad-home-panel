@@ -8,3 +8,4 @@
 .navbar .nav-item+.nav-item{margin-left:2px}.device-grid .device+.device{margin-left:0}
 @media(max-width:800px){.clock{font-size:76px}.weather-main>*+*{margin-left:10px}}
 @media(orientation:landscape) and (max-height:620px){.clock{font-size:67px}}
+.radar{margin-top:16px;padding:20px}.radar-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.radar-heading h2{font-size:20px;margin:0}.radar-heading span,.radar p{color:#a2b4c7;font-size:13px}.radar p{margin:8px 0 0}.radar a{color:#91c8fa}body.light .radar-heading span,body.light .radar p{color:#5b728b}body.light .radar a{color:#245a8a}

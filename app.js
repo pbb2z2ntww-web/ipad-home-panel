@@ -86,12 +86,17 @@
     $('theme-select').value=data.theme;$('time-format').value=data.clock;$('weather-location').value=data.location;
     $('slide-seconds').value=data.interval;clock();setText('weather-city',(locations[data.location]||locations.hannover).name);
   }
+  function updateRadar(){
+    var loc=locations[data.location]||locations.hannover;
+    setText('radar-location',loc.name);
+    $('rain-radar').src='https://whunters.net/embed/?lat='+loc.lat+'&lon='+loc.lon+'&z=7&layers=rain&theme=dark&lang=de';
+  }
   function bindSettings(){
     $('theme-select').onchange=function(){data.theme=this.value;save('theme',data.theme);applySettings();};
     $('time-format').onchange=function(){data.clock=this.value;save('clock',data.clock);clock();};
-    $('weather-location').onchange=function(){data.location=this.value;save('location',data.location);fetchWeather();};
+    $('weather-location').onchange=function(){data.location=this.value;save('location',data.location);fetchWeather();updateRadar();};
     $('slide-seconds').onchange=function(){data.interval=this.value;save('interval',data.interval);startSlideshow();};
-    $('reset-settings').onclick=function(){var k;for(k in defaults){if(defaults.hasOwnProperty(k)){data[k]=defaults[k];save(k,data[k]);}}applySettings();fetchWeather();setText('settings-feedback','Einstellungen zurückgesetzt.');};
+    $('reset-settings').onclick=function(){var k;for(k in defaults){if(defaults.hasOwnProperty(k)){data[k]=defaults[k];save(k,data[k]);}}applySettings();fetchWeather();updateRadar();setText('settings-feedback','Einstellungen zurückgesetzt.');};
     $('refresh-weather').onclick=fetchWeather;
   }
   function bindDemoSwitches(){
@@ -127,7 +132,7 @@
     data={theme:load('theme',defaults.theme),clock:load('clock',defaults.clock),location:load('location',defaults.location),interval:load('interval',defaults.interval)};
     if(!locations[data.location])data.location='hannover';
     if(data.theme!=='dark'&&data.theme!=='light')data.theme='dark';
-    bindNavigation();bindSettings();bindDemoSwitches();bindPhotos();applySettings();drawPhoto();page('home');clock();fetchWeather();
+    bindNavigation();bindSettings();bindDemoSwitches();bindPhotos();applySettings();drawPhoto();page('home');clock();fetchWeather();updateRadar();
     setInterval(clock,10000);setInterval(fetchWeather,15*60*1000);
     window.addEventListener('online',fetchWeather,false);
     window.addEventListener('offline',function(){setText('connection-status','Offline');},false);
